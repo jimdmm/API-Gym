@@ -3,12 +3,19 @@ import { IUsersRepository } from '../users-repository'
 
 export class InMemoryUsersRepository implements IUsersRepository {
   public users: User[] = []
+
+  async findById(id: string): Promise<User | null> {
+    const createdUser = this.users.find((user) => user.id === id)
+
+    if (!createdUser) return null
+
+    return createdUser
+  }
+
   async findByEmail(email: string): Promise<User | null> {
     const user = this.users.find((user) => user.email === email)
 
-    if (!user) {
-      return null
-    }
+    if (!user) return null
 
     return user
   }
